@@ -1,0 +1,17 @@
+GET http://localhost:3000/users
+
+###
+
+GET http://localhost:3000/todos
+
+###
+
+POST http://localhost:3000/users/createUser
+Content-Type: application/json
+
+{
+  "name": "phillip"
+}
+
+###
+

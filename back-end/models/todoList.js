@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const todoListItemSchema = require('./todoListItem')
+const todoListItemSchema = require('./todoListItem').schema
 
 const todoListSchema = new mongoose.Schema({
   name: {

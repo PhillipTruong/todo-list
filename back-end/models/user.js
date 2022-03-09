@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
-const todoListSchema = require('./todoList')
+const TodoListSchema = require('./todoList').schema
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
   },
-  lists: [todoListSchema]
+  todoLists: [TodoListSchema]
 })
 
 module.exports = mongoose.model('User', userSchema)
