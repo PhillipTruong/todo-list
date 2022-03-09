@@ -10,6 +10,9 @@ db.on('open', () => console.log('connected to database'))
 
 app.use(express.json())
 
+const userRouter = require('./routes/users')
+app.use('/users', userRouter)
+
 const todoRouter = require('./routes/todos')
 app.use('/todos', todoRouter)
 
