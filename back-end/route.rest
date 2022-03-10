@@ -6,11 +6,43 @@ GET http://localhost:3000/todos
 
 ###
 
+GET http://localhost:3000/todos/getAllLists
+
+###
+
 POST http://localhost:3000/users/createUser
 Content-Type: application/json
 
 {
   "name": "phillip"
+}
+
+###
+
+POST http://localhost:3000/todos/createList
+Content-Type: application/json
+
+{
+  "name": "List1"
+}
+
+###
+
+POST http://localhost:3000/todos/createTodoItem/62297858548e7aca3ead350a
+Content-Type: application/json
+
+{
+  "itemString": "say cccc"
+}
+
+###
+
+PATCH  http://localhost:3000/todos/editTodoItem/62297858548e7aca3ead350a/62297afc4356d3801f65478a
+Content-Type: application/json
+
+{
+  "itemString": "finally",
+  "completed": false
 }
 
 ###
