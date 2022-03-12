@@ -1,14 +1,14 @@
-import React from "react";
-import "./App.css";
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
 
-function App() {
+import Home from './pages/home'
+
+const App = () => {
   return (
-    <div className="flex justify-center">
-      <h1 className="font-bold text-2xl text-blue-900">
-        React and Tailwind with Vitejs!
-      </h1>
-    </div>
-  );
+    <Routes>
+      <Route path="/" exact element={<Home />} />
+    </Routes>
+  )
 }
 
-export default App;
+export default App; 
