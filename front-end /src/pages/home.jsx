@@ -1,6 +1,12 @@
 import React from 'react'
 
 const Home = () => {
+
+  const fakeTodoList = [
+    {itemString: 'eat', completed: false},
+    {itemString: 'shop', completed: false},
+    {itemString: 'call', completed: false},
+  ]
   return (
 
     <div className='min-h-screen bg-blue-200 p-10 grid gap-5 grid-rows-5 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1'>
@@ -11,12 +17,18 @@ const Home = () => {
           <li>School</li>
         </ul>
       </div>
+
       <div className='p-5 bg-white rounded-lg row-span-4 sm:col-span-2 sm:row-span-1'>
         <h2>
           List Name
         </h2>
-        <div className="flex justify-center items-center">
+
+        <div className="flex justify-center items-center bg-orange-300">
           <div className="flex flex-col pt-8 lg:w-2/5 sm:w-3/5 w-11/12 gap-4">
+            {fakeTodoList.map((item, index) => (
+              <p key={index}>{item.itemString}</p>
+            ))}
+
             <div className="flex gap-2">
               <input
                 placeholder="New Todo"
@@ -28,7 +40,7 @@ const Home = () => {
                 Save
               </button>
             </div>
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <div
                 className={`flex flex-grow items-center gap-2 bg-gray-200 p-2 rounded cursor-pointer`}
               >
@@ -38,7 +50,7 @@ const Home = () => {
               <button className="flex-none bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                 Delete
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
