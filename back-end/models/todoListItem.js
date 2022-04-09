@@ -5,6 +5,10 @@ const todoListItemSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  listId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+  },
   completed: Boolean
 })
 
