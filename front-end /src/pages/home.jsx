@@ -8,6 +8,8 @@ const Home = () => {
     { itemString: 'call', completed: false, id: '3' },
   ])
 
+  const [currentTodo, setCurrentTodo] = useState('')
+
   const handleTodoListChange = (e) => {
     setTodoList(
       todoList.map((todoItem) => {
@@ -15,6 +17,16 @@ const Home = () => {
       })
     );
     console.log(todoList)
+  }
+
+  const handleAddTodo = () => {
+    console.log('adding current:', currentTodo)
+    const newTodo = { itemString: currentTodo, completed: false, id: '4' }
+    setTodoList([...todoList, newTodo])
+  }
+
+  const handleCurrentTodoText = (e) => {
+    setCurrentTodo(e.target.value)
   }
 
   return (
@@ -33,7 +45,7 @@ const Home = () => {
         </h2>
 
         <div className="flex justify-center items-center">
-          <div className="flex flex-col pt-8 lg:w-2/5 sm:w-3/5 w-11/12 gap-4">
+          <div className="flex flex-col pt-4 w-full gap-4">
             {todoList.map((item, index) => (
               <div key={index} className="flex gap-2 items-center">
                 <input
@@ -50,9 +62,11 @@ const Home = () => {
               <input
                 placeholder="New Todo"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                onChange={handleCurrentTodoText}
               />
               <button
                 className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                onClick={handleAddTodo}
               >
                 Add
               </button>
