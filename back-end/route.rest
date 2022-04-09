@@ -1,16 +1,16 @@
-GET http://localhost:3000/users
+GET http://localhost:3001/users
 
 ###
 
-GET http://localhost:3000/todos
+GET http://localhost:3001/todos
 
 ###
 
-GET http://localhost:3000/todos/getAllLists
+GET http://localhost:3001/todos/getAllLists
 
 ###
 
-POST http://localhost:3000/users/createUser
+POST http://localhost:3001/users/createUser
 Content-Type: application/json
 
 {
@@ -19,31 +19,37 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/todos/createList
+POST http://localhost:3001/todos/createList
 Content-Type: application/json
 
 {
-  "name": "List1"
+  "name": "Basic list" 
 }
 
 ###
 
-POST http://localhost:3000/todos/createTodoItem/62297858548e7aca3ead350a
+POST http://localhost:3001/todos/createTodoItem/62520dee3fb782c07c5c61c0
 Content-Type: application/json
 
 {
-  "itemString": "say cccc"
+  "itemString": "Basic todo"
 }
 
 ###
 
-PATCH  http://localhost:3000/todos/editTodoItem/62297858548e7aca3ead350a/62297afc4356d3801f65478a
+PATCH  http://localhost:3001/todos/editTodoItem/62520fdeac04f54ae15c9de7
 Content-Type: application/json
 
 {
   "itemString": "finally",
-  "completed": false
+  "completed": true
 }
 
 ###
+
+DELETE http://localhost:3001/todos/deleteTodoListItem/62520fdeac04f54ae15c9de7
+Content-Type: application/json
+
+### 
+
 

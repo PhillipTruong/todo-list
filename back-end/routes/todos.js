@@ -34,12 +34,14 @@ router.post('/createTodoItem/:id', getTodoList, async (req, res) => {
   const todoListItem = new TodoListItem({
     itemString: req.body.itemString,
     completed: false,
+    listId: req.params.id
   })
 
   try {
-    res.todoList.listItems.push(todoListItem)
-    let updatedTodoList = await res.todoList.save()
-    res.status(201).json(updatedTodoList)
+    // res.todoList.listItems.push(todoListItem)
+    // let updatedTodoList = await res.todoList.save()
+    const newTodoItem = await todoListItem.save()
+    res.status(201).json(newTodoItem)
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
@@ -57,21 +59,22 @@ router.patch('/editTodoList/:id', getTodoList, async (req, res) => {
   }
 })
 
-router.patch('/editTodoItem/:id/:itemIndex', async (req, res) => {
-  try {
-    todoList = await TodoList.updateOne({
-      _id: req.params.id, "listItems._id": req.params.itemIndex
-    },
-      {
-        '$set': {
-          'listItems.$.itemString': req.body.itemString,
-          'listItems.$.completed': req.body.completed
-        }
-      })
-    res.json(todoList)
-  } catch (error) {
-    res.status(400).json({ message: error.message })
-  }
+router.patch('/editTodoItem/:id/', async (req, res) => {
+  TodoListItem.findByIdAndUpdate(req.params.id, req.body,
+    function (err, todo) {
+      if (err) {
+        console.log(err)
+      }
+      else {
+        console.log("Updated todo: ", todo);
+      }
+    });
+  // try {
+  //   todoListItem = await TodoListItem.findByIdAndUpdate(req.params.id, { completed: true })
+  //   res.json(todoListItem)
+  // } catch (error) {
+  //   res.status(400).json({ message: error.message })
+  // }
 })
 
 router.delete('/deleteTodoList/:id', getTodoList, async (req, res) => {
@@ -97,5 +100,22 @@ async function getTodoList(req, res, next) {
   res.todoList = todoList
   next()
 }
+
+router.delete('/deleteTodoListItem/:id', async (req, res) => {
+
+  try {
+    TodoListItem.findByIdAndDelete(req.params.id, function (err, todo) {
+      if (err) {
+        console.log(err)
+      }
+      else {
+        console.log("Deleted : ", todo);
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+})
+
 
 module.exports = router
