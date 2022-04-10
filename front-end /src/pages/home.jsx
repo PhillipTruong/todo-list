@@ -1,28 +1,56 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from "axios"
 
 const Home = () => {
+  const beURL = 'http://localhost:3001'
+  const fixedTodoListId = '62520dee3fb782c07c5c61c0'
 
-  const [todoList, setTodoList] = useState([
-    { itemString: 'eat', completed: true, id: '1' },
-    { itemString: 'shop', completed: false, id: '2' },
-    { itemString: 'call', completed: false, id: '3' },
-  ])
-
+  const [todoList, setTodoList] = useState([])
   const [currentTodo, setCurrentTodo] = useState('')
 
-  const handleTodoListChange = (e) => {
-    setTodoList(
-      todoList.map((todoItem) => {
-        return todoItem.id === e.target.id ? { ...todoItem, completed: !todoItem.completed } : todoItem;
+  useEffect(async () => {
+    try {
+      const todoItemList = await axios(beURL + '/todos/getAllTodoItems/' + fixedTodoListId)
+      console.log('lists:', todoItemList)
+      setTodoList(todoItemList.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
+  const handleTodoListChange = async (e) => {
+    const { checked: changingTodoValue, id: changingTodoId } = e.target
+    const changingTodo = {
+      completed: changingTodoValue,
+    }
+    await axios.patch(beURL + '/todos/editTodoItem/' + changingTodoId, changingTodo)
+      .then((response) => {
+        let newTodo = response.data
+        console.log(newTodo.completed)
+
+        setTodoList(
+          todoList.map((todoItem) => {
+            return todoItem._id === changingTodoId ? { ...todoItem, completed: changingTodoValue } : todoItem;
+          })
+        )
       })
-    );
-    console.log(todoList)
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  const handleAddTodo = () => {
-    console.log('adding current:', currentTodo)
-    const newTodo = { itemString: currentTodo, completed: false, id: '4' }
-    setTodoList([...todoList, newTodo])
+  const handleAddTodo = async () => {
+    const newTodo = { itemString: currentTodo }
+
+    await axios.post(beURL + '/todos/createTodoItem/' + fixedTodoListId, newTodo)
+      .then((response) => {
+        let newTodo = response.data
+        setTodoList([...todoList, newTodo])
+        setCurrentTodo('')
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   const handleCurrentTodoText = (e) => {
@@ -49,7 +77,7 @@ const Home = () => {
             {todoList.map((item, index) => (
               <div key={index} className="flex gap-2 items-center">
                 <input
-                  id={item.id}
+                  id={item._id}
                   type="checkbox"
                   checked={item.completed}
                   onChange={handleTodoListChange}
