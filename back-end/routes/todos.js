@@ -17,6 +17,16 @@ router.get('/getAllLists', async (req, res) => {
   }
 })
 
+router.get('/getAllTodoItems/:id', async (req, res) => {
+  try {
+    const findParams = { listId: req.params.id }
+    const todoItemList = await TodoListItem.find(findParams)
+    res.json(todoItemList)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
 router.post('/createList', async (req, res) => {
   const todoList = new TodoList({
     name: req.body.name,
@@ -60,21 +70,16 @@ router.patch('/editTodoList/:id', getTodoList, async (req, res) => {
 })
 
 router.patch('/editTodoItem/:id/', async (req, res) => {
-  TodoListItem.findByIdAndUpdate(req.params.id, req.body,
-    function (err, todo) {
-      if (err) {
-        console.log(err)
+  try {
+    const updatedTodo = await TodoListItem.findByIdAndUpdate(req.params.id, req.body,
+      {
+        new: true
       }
-      else {
-        console.log("Updated todo: ", todo);
-      }
-    });
-  // try {
-  //   todoListItem = await TodoListItem.findByIdAndUpdate(req.params.id, { completed: true })
-  //   res.json(todoListItem)
-  // } catch (error) {
-  //   res.status(400).json({ message: error.message })
-  // }
+    );
+    res.status(201).json(updatedTodo)
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
 })
 
 router.delete('/deleteTodoList/:id', getTodoList, async (req, res) => {
@@ -101,7 +106,7 @@ async function getTodoList(req, res, next) {
   next()
 }
 
-router.delete('/deleteTodoListItem/:id', async (req, res) => {
+router.delete('/deleteTodoItem/:id', async (req, res) => {
 
   try {
     TodoListItem.findByIdAndDelete(req.params.id, function (err, todo) {
