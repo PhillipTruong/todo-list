@@ -9,6 +9,9 @@ GET http://localhost:3001/todos
 GET http://localhost:3001/todos/getAllLists
 
 ###
+GET http://localhost:3001/todos/getAllTodoItems/62520dee3fb782c07c5c61c0
+
+###
 
 POST http://localhost:3001/users/createUser
 Content-Type: application/json
@@ -32,12 +35,12 @@ POST http://localhost:3001/todos/createTodoItem/62520dee3fb782c07c5c61c0
 Content-Type: application/json
 
 {
-  "itemString": "Basic todo"
+  "itemString": "Basic todo 2"
 }
 
 ###
 
-PATCH  http://localhost:3001/todos/editTodoItem/62520fdeac04f54ae15c9de7
+PATCH  http://localhost:3001/todos/editTodoItem/62531a2985acfcb641384288
 Content-Type: application/json
 
 {
