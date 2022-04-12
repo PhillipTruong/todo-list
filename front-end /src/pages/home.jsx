@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios"
+import TodoItem from '../components/todoItem/todoItem'
 
 const Home = () => {
   const beURL = 'http://localhost:3001'
@@ -75,15 +76,13 @@ const Home = () => {
         <div className="flex justify-center items-center">
           <div className="flex flex-col pt-4 w-full gap-4">
             {todoList.map((item, index) => (
-              <div key={index} className="flex gap-2 items-center">
-                <input
-                  id={item._id}
-                  type="checkbox"
-                  checked={item.completed}
-                  onChange={handleTodoListChange}
-                />
-                <p>{item.itemString}</p>
-              </div>
+              <TodoItem
+                key={index}
+                id={item._id}
+                completed={item.completed}
+                handleTodoListChange={handleTodoListChange}
+                itemString={item.itemString}
+              />
             ))}
 
             <div className="flex gap-2">
