@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios"
 import TodoItem from '../components/todoItem/todoItem'
+import Modal from '../components/modal/modal'
 
 const Home = () => {
   const beURL = 'http://localhost:3001'
@@ -8,6 +9,7 @@ const Home = () => {
 
   const [todoList, setTodoList] = useState([])
   const [currentTodo, setCurrentTodo] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(async () => {
     try {
@@ -58,14 +60,22 @@ const Home = () => {
     setCurrentTodo(e.target.value)
   }
 
+  const openModal = () => {
+    setIsOpen(true)
+  }
+
   return (
     <div className='min-h-screen bg-blue-200 p-10 grid gap-5 grid-rows-5 grid-cols-1 sm:grid-cols-3 sm:grid-rows-1'>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <div>I am modal</div>
+      </Modal>
       <div className='p-5 bg-white rounded-lg'>
         <h2>My Lists:</h2>
         <ul className='list-disc list-inside'>
           <li>Groceries</li>
           <li>School</li>
         </ul>
+        <button onClick={openModal}>Open Modal</button>
       </div>
 
       <div className='p-5 bg-white rounded-lg row-span-4 sm:col-span-2 sm:row-span-1'>
